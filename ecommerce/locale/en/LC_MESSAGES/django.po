@@ -1,0 +1,98 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-24 01:31+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\ecommerce\settings.py:208 .\templates\store\list_product.html:137
+msgid "English"
+msgstr "English"
+
+#: .\ecommerce\settings.py:209 .\templates\store\list_product.html:141
+msgid "Arabic"
+msgstr "Arabic"
+
+#: .\templates\store\list_product.html:19
+#: .\templates\store\list_product.html:50
+msgid "Welcome to our shop"
+msgstr "Welcome to our shop"
+
+#: .\templates\store\list_product.html:22
+#: .\templates\store\list_product.html:53
+#, fuzzy
+#| msgid ""
+#| "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quam velit "
+#| "saepe dolorem deserunt quo quidem ad optio."
+msgid ""
+"\n"
+"                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.\n"
+"                  Iste quam velit saepe dolorem deserunt quo quidem ad "
+"optio.\n"
+"                  "
+msgstr ""
+"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quam velit "
+"saepe dolorem deserunt quo quidem ad optio."
+
+#: .\templates\store\list_product.html:28
+#: .\templates\store\list_product.html:59
+#: .\templates\store\list_product.html:199
+msgid "Read More"
+msgstr "Read More"
+
+#: .\templates\store\list_product.html:86
+msgid "Our Products"
+msgstr "Our Products"
+
+#: .\templates\store\list_product.html:146
+msgid "Current language"
+msgstr "Current language"
+
+#: .\templates\store\list_product.html:152
+msgid "First"
+msgstr "First"
+
+#: .\templates\store\list_product.html:154
+msgid "Back"
+msgstr "Back"
+
+#: .\templates\store\list_product.html:159
+msgid "Page"
+msgstr "Page"
+
+#: .\templates\store\list_product.html:160
+msgid "of"
+msgstr "of"
+
+#: .\templates\store\list_product.html:165
+msgid "Next"
+msgstr "Next"
+
+#: .\templates\store\list_product.html:168
+msgid "Last"
+msgstr "Last"
+
+#: .\templates\store\list_product.html:190
+msgid "We Provide Best For You"
+msgstr "We Provide Best For You"
+
+#: .\templates\store\list_product.html:194
+msgid ""
+"\n"
+"            Totam architecto rem beatae veniam, cum officiis adipisci soluta "
+"perspiciatis ipsa...\n"
+"            "
+msgstr ""

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Checkout" %} — Glass Shop{% endblock %}
+
+{% block content %}
+<section class="py-12 md:py-16">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-10">
+      <h2 class="text-2xl md:text-3xl font-bold text-white">{% trans "Checkout" %}</h2>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-8">
+      <div class="lg:w-3/5">
+        <div class="glass p-8">
+          <h4 class="text-white font-bold text-base mb-6">{% trans "Shipping Details" %}</h4>
+          <form method="post" class="space-y-4">
+            {% csrf_token %}
+            {% for field in form %}
+            <div>
+              <label class="block text-white text-sm font-medium mb-1.5">{{ field.label }}</label>
+              {{ field }}
+              {% if field.errors %}
+              <p class="text-white text-xs mt-1">{{ field.errors.0 }}</p>
+              {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn-glass btn-glass-primary w-full justify-center py-3 mt-4">
+              <i class="fa fa-credit-card"></i> {% trans "Place Order" %}
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="lg:w-2/5">
+        <div class="glass p-6">
+          <h4 class="text-white font-bold text-base mb-4">{% trans "Order Summary" %}</h4>
+          <div class="space-y-3 mb-4">
+            {% for item in cart %}
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-lg bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.04)] flex-shrink-0 overflow-hidden flex items-center justify-center">
+                {% if item.product.image %}
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="w-full h-full object-cover">
+                {% else %}
+                <i class="fa fa-cube text-white"></i>
+                {% endif %}
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-white text-sm truncate">{{ item.product.name }}</p>
+                <p class="text-white text-xs">x{{ item.quantity }}</p>
+              </div>
+              <span class="text-white text-sm">${{ item.total_price }}</span>
+            </div>
+            {% endfor %}
+          </div>
+
+          <div class="space-y-2 pt-4 border-t border-[rgba(255,255,255,0.06)]">
+            <div class="flex justify-between text-white text-sm">
+              <span>{% trans "Subtotal" %}</span>
+              <span>${{ cart.get_total_price|floatformat:1 }}</span>
+            </div>
+            <div class="flex justify-between text-white text-sm">
+              <span>{% trans "Tax" %}</span>
+              <span>${{ cart.get_tax|floatformat:2 }}</span>
+            </div>
+            <div class="flex justify-between text-white font-bold text-base pt-2 border-t border-[rgba(255,255,255,0.06)]">
+              <span>{% trans "Total" %}</span>
+              <span>${{ cart.get_total_price|floatformat:1 }}</span>
+            </div>
+                      <div class="text-white text-xs space-y-1 mb-6">
+            <div class="flex justify-between">
+              <span>{% trans "Final Total" %}</span>
+              <span>${{ cart.get_final_price|floatformat:2 }}</span>
+            </div>
+            
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

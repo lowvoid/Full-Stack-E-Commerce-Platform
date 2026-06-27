@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ detail.name }} — Glass Shop{% endblock %}
+
+{% block content %}
+<section class="py-12 md:py-16">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-10">
+      <h2 class="text-2xl md:text-3xl font-bold text-white">{% trans "Product Details" %}</h2>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-8">
+      <div class="lg:w-1/2">
+        <div class="glass-strong p-2 rounded-2xl">
+          <div class="w-full h-80 md:h-96 rounded-xl overflow-hidden bg-[rgba(255,255,255,0.02)] flex items-center justify-center">
+            {% if detail.image %}
+            <img src="{{ detail.image.url }}" alt="{{ detail.name }}" class="w-full h-full object-cover">
+            {% else %}
+            <i class="fa fa-cube text-6xl text-white"></i>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:w-1/2">
+        <div class="glass p-8 md:p-10 h-full">
+          <h4 class="text-xl md:text-2xl font-bold text-white mb-3">{{ detail.name }}</h4>
+
+          <div class="text-2xl font-bold text-white mb-4">
+            <span>$</span> {{ detail.price }}
+          </div>
+
+          <div class="star_container flex gap-1 text-white mb-4">
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star-half-o"></i>
+          </div>
+
+          <p class="text-white text-sm leading-relaxed mb-6">
+            {{ detail.description }}
+          </p>
+
+          <form action="{% url 'cart:cart_add' detail.id %}" method="POST" class="flex items-center gap-4 flex-wrap">
+            {% csrf_token %}
+            <div class="flex items-center gap-2">
+              {% for field in cart_product_form %}
+              <div class="flex items-center gap-2">
+                <label class="text-white text-sm">{{ field.label }}</label>
+                {{ field }}
+              </div>
+              {% endfor %}
+            </div>
+            <button type="submit" class="btn-glass btn-glass-primary">
+              <i class="fa fa-shopping-cart"></i> {% trans "Add to Cart" %}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-10">
+      <div class="glass p-8">
+        <h4 class="text-lg font-bold text-white mb-4">{% trans "Additional Information" %}</h4>
+        <ul class="space-y-2">
+          <li class="text-white text-sm flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-white inline-block"></span>
+            {% trans "Feature 1: Description of the feature." %}
+          </li>
+          <li class="text-white text-sm flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-white inline-block"></span>
+            {% trans "Feature 2: Description of the feature." %}
+          </li>
+          <li class="text-white text-sm flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-white inline-block"></span>
+            {% trans "Feature 3: Description of the feature." %}
+          </li>
+          <li class="text-white text-sm flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-white inline-block"></span>
+            {% trans "Feature 4: Description of the feature." %}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

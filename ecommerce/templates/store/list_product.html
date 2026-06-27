@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+
+{% comment %} ======== SLIDER / HERO CAROUSEL ======== {% endcomment %}
+<section class="slider_section relative overflow-hidden">
+  <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="relative min-h-[400px] md:min-h-[520px] flex items-center bg-[rgba(255,255,255,0.015)]">
+          <div class="absolute inset-0 bg-gradient-to-r from-[rgba(8,8,14,0.7)] to-transparent z-[1]"></div>
+          <div class="container mx-auto px-4 relative z-[2] w-full">
+            <div class="flex flex-col md:flex-row items-center gap-8">
+              <div class="md:w-1/2 text-center md:text-left">
+                <div class="glass p-8 md:p-10 inline-block max-w-lg">
+                  <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight">
+                    {% trans "Welcome to our shop" %}
+                  </h1>
+                  <p class="text-white text-sm md:text-base mt-4 leading-relaxed">
+                    {% blocktrans %}
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Iste quam velit saepe dolorem deserunt quo quidem ad optio.
+                    {% endblocktrans %}
+                  </p>
+                  <a href="#" class="btn-glass btn-glass-primary mt-5 inline-block">{% trans "Read More" %}</a>
+                </div>
+              </div>
+              <div class="md:w-1/2 flex justify-center">
+                <div class="glass-strong p-2 rounded-2xl">
+                  <div class="w-64 h-64 md:w-80 md:h-80 rounded-xl bg-[rgba(255,255,255,0.02)] flex items-center justify-center text-6xl text-white">
+                    <i class="fa fa-shopping-bag"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <div class="relative min-h-[400px] md:min-h-[520px] flex items-center bg-[rgba(255,255,255,0.015)]">
+          <div class="absolute inset-0 bg-gradient-to-r from-[rgba(8,8,14,0.7)] to-transparent z-[1]"></div>
+          <div class="container mx-auto px-4 relative z-[2] w-full">
+            <div class="flex flex-col md:flex-row items-center gap-8">
+              <div class="md:w-1/2 text-center md:text-left">
+                <div class="glass p-8 md:p-10 inline-block max-w-lg">
+                  <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gradient leading-tight">
+                    {% trans "Welcome to our shop" %}
+                  </h1>
+                  <p class="text-white text-sm md:text-base mt-4 leading-relaxed">
+                    {% blocktrans %}
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Iste quam velit saepe dolorem deserunt quo quidem ad optio.
+                    {% endblocktrans %}
+                  </p>
+                  <a href="#" class="btn-glass btn-glass-primary mt-5 inline-block">{% trans "Read More" %}</a>
+                </div>
+              </div>
+              <div class="md:w-1/2 flex justify-center">
+                <div class="glass-strong p-2 rounded-2xl">
+                  <div class="w-64 h-64 md:w-80 md:h-80 rounded-xl bg-[rgba(255,255,255,0.02)] flex items-center justify-center text-6xl text-white">
+                    <i class="fa fa-gift"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% comment %} Carousel controls {% endcomment %}
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+      <a class="w-8 h-8 rounded-full glass-light flex items-center justify-center text-white hover:brightness-75 transition cursor-pointer" href="#customCarousel1" role="button" data-slide="prev">
+        <i class="fa fa-chevron-left text-xs"></i>
+      </a>
+      <a class="w-8 h-8 rounded-full glass-light flex items-center justify-center text-white hover:brightness-75 transition cursor-pointer" href="#customCarousel1" role="button" data-slide="next">
+        <i class="fa fa-chevron-right text-xs"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% comment %} ======== PRODUCTS ======== {% endcomment %}
+<section class="product_section py-12 md:py-16">
+  <div class="container mx-auto px-4">
+    <div class="heading_container heading_center text-center mb-10">
+      <h2 class="text-2xl md:text-3xl font-bold text-gradient">{% trans "Our Products" %}</h2>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {% for product in products %}
+      <div class="glass glass-card-hover p-4">
+        <a href="{% url 'store:product_detail' product.slug %}">
+          <div class="w-full h-48 rounded-xl bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.04)] overflow-hidden flex items-center justify-center mb-4">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+            {% else %}
+            <i class="fa fa-cube text-4xl text-white"></i>
+            {% endif %}
+          </div>
+        </a>
+        <div>
+          <h5 class="text-sm font-semibold mb-1">
+            <a href="{% url 'store:product_detail' product.slug %}" class="text-white hover:text-white transition no-underline">
+              {{ product.name }}
+            </a>
+          </h5>
+          <div class="text-lg font-bold text-white mb-2">
+            <span>$</span> {{ product.price }}
+          </div>
+          <div class="star_container flex gap-0.5 text-xs text-white mb-4">
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+            <i class="fa fa-star"></i>
+          </div>
+          <a href="{% url 'store:product_detail' product.slug %}" class="btn-glass text-xs w-full justify-center">
+            {% trans "View Details" %}
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% comment %} ======== LANGUAGE SWITCH ======== {% endcomment %}
+    <form action="{% url 'set_language' %}" method="post" class="flex items-center justify-center gap-3 mt-10 flex-wrap">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.path }}">
+      <span class="text-xs text-white">{% trans "Language" %}:</span>
+      <button type="submit" name="language" value="en" class="btn-glass text-xs px-4 py-1.5">{% trans "English" %}</button>
+      <button type="submit" name="language" value="ar" class="btn-glass text-xs px-4 py-1.5">{% trans "Arabic" %}</button>
+      {% get_current_language as LANGUAGE_CODE %}
+      <span class="text-xs text-white ml-2">({{ LANGUAGE_CODE }})</span>
+    </form>
+
+    {% comment %} ======== PAGINATION ======== {% endcomment %}
+    <div class="btn_box flex items-center justify-center gap-2 mt-8 pagination-glass">
+      {% if page_obj.has_previous %}
+        <a href="?page=1">{% trans "First" %}</a>
+        <a href="?page={{ page_obj.previous_page_number }}">{% trans "Back" %}</a>
+      {% endif %}
+      <span>{% trans "Page" %} {{ page_obj.number }} {% trans "of" %} {{ page_obj.paginator.num_pages }}</span>
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">{% trans "Next" %}</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">{% trans "Last" %}</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% comment %} ======== ABOUT ======== {% endcomment %}
+<section class="about_section py-12 md:py-16">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+      <div class="md:w-1/2">
+        <div class="glass p-8 md:p-10">
+          <div class="heading_container mb-4">
+            <h2 class="text-2xl md:text-3xl font-bold text-gradient">{% trans "We Provide Best For You" %}</h2>
+          </div>
+          <p class="text-white text-sm leading-relaxed">
+            {% blocktrans %}
+            Totam architecto rem beatae veniam, cum officiis adipisci soluta perspiciatis ipsa...
+            {% endblocktrans %}
+          </p>
+          <a href="#" class="btn-glass mt-5 inline-block">{% trans "Read More" %}</a>
+        </div>
+      </div>
+      <div class="md:w-1/2">
+        <div class="glass-strong p-2 rounded-2xl">
+          <div class="w-full h-64 md:h-80 rounded-xl bg-[rgba(255,255,255,0.02)] flex items-center justify-center text-6xl text-white">
+            <i class="fa fa-camera"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

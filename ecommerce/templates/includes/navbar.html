@@ -1,0 +1,124 @@
+<header class="glass-nav sticky top-0 z-50">
+  {% comment %} -------- TOP BAR: contact / search / user -------- {% endcomment %}
+  <div class="border-b border-[rgba(255,255,255,0.04)]">
+    <div class="container mx-auto px-4 flex items-center justify-between h-[44px]">
+      <div class="flex items-center gap-5 text-xs">
+        <a href="" class="text-white hover:brightness-75 transition flex items-center gap-1.5 no-underline">
+          <i class="fa fa-phone text-[10px]"></i>
+          <span class="hidden sm:inline">+01 123455678990</span>
+        </a>
+        <a href="" class="text-white hover:brightness-75 transition flex items-center gap-1.5 no-underline">
+          <i class="fa fa-envelope text-[10px]"></i>
+          <span class="hidden sm:inline">demo@gmail.com</span>
+        </a>
+      </div>
+
+      <form class="hidden md:flex items-center" method="get" action="{% url 'store:product_search' %}">
+        <div class="flex items-center bg-[rgba(255,255,255,0.04)] border border-[rgba(255,255,255,0.06)] rounded-full overflow-hidden transition focus-within:border-[rgba(255,255,255,0.15)]">
+          <input type="text" name="query" class="bg-transparent border-0 outline-none text-white text-xs px-3 py-1.5 w-[160px] placeholder-[rgba(255, 255, 255, 0.81)]" placeholder="Search here...">
+          <button class="px-2.5 text-white hover:brightness-75 transition">
+            <i class="fa fa-search text-xs"></i>
+          </button>
+        </div>
+      </form>
+
+      <div class="flex items-center gap-4">
+        {% if user.is_authenticated %}
+        <a href="{% url 'accounts:logout' %}" class="text-white hover:brightness-75 transition text-xs flex items-center gap-1.5 no-underline">
+          <i class="fa fa-sign-out"></i>
+          <span class="hidden sm:inline">Logout</span>
+        </a>
+        {% else %}
+        <a href="{% url 'accounts:login' %}" class="text-white hover:brightness-75 transition text-xs flex items-center gap-1.5 no-underline">
+          <i class="fa fa-sign-in"></i>
+          <span class="hidden sm:inline">Login</span>
+        </a>
+        <a href="{% url 'accounts:register' %}" class="text-white hover:brightness-75 transition text-xs flex items-center gap-1.5 no-underline">
+          <i class="fa fa-user-plus"></i>
+          <span class="hidden sm:inline">Register</span>
+        </a>
+        {% endif %}
+        <a href="{% url 'cart:cart_detail' %}" class="text-white hover:brightness-75 transition text-xs flex items-center gap-1.5 no-underline relative">
+          <i class="fa fa-shopping-cart text-sm"></i>
+          <span class="hidden sm:inline">Cart</span>
+          {% with total_items=cart|length %}
+          {% if total_items > 0 %}
+          <span class="absolute -top-2 -right-2 bg-[rgba(255,40,120,0.4)] border border-[rgba(255,40,120,0.2)] text-white text-[9px] font-semibold min-w-[16px] h-4 flex items-center justify-center rounded-full px-1">{{ total_items }}</span>
+          <small class="hidden lg:inline text-white ml-1">
+            ${{ cart.get_total_price }}
+          </small>
+          {% else %}
+          <small class="hidden lg:inline text-white ml-1">empty</small>
+          {% endif %}
+          {% endwith %}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  {% comment %} -------- BOTTOM BAR: brand + nav -------- {% endcomment %}
+  <div class="container mx-auto px-4">
+    <nav class="navbar navbar-expand-lg navbar-dark flex items-center justify-between h-[56px] p-0 relative">
+      <a class="navbar-brand text-white font-bold text-lg tracking-tight no-underline" href="{% url 'store:products' %}">
+        <span class="text-white">E-commerce</span>
+      </a>
+
+      <button class="navbar-toggler border-0 p-2 cursor-pointer flex flex-col gap-[3px] lg:hidden" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-label="Toggle navigation">
+        <span class="block w-5 h-[2px] bg-[rgba(255,255,255,0.4)] rounded"></span>
+        <span class="block w-5 h-[2px] bg-[rgba(255,255,255,0.4)] rounded"></span>
+        <span class="block w-5 h-[2px] bg-[rgba(255,255,255,0.4)] rounded"></span>
+      </button>
+
+      <div class="collapse navbar-collapse lg:!flex lg:items-center" id="navbarSupportedContent">
+        <ul class="navbar-nav flex flex-col lg:flex-row lg:items-center gap-0.5 lg:ml-auto glass lg:glass-none p-3 lg:p-0 rounded-xl lg:rounded-none lg:bg-transparent lg:backdrop-filter-none">
+          <li class="nav-item active">
+            <a class="nav-link block text-white hover:brightness-75 text-sm px-3 py-2 rounded-lg transition no-underline" href="{% url 'store:products' %}">Home</a>
+          </li>
+          <li class="nav-item dropdown relative">
+            <a class="nav-link dropdown-toggle block text-white hover:brightness-75 text-sm px-3 py-2 rounded-lg transition no-underline flex items-center gap-1" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Categories <i class="fa fa-chevron-down text-[9px]"></i>
+            </a>
+            <div class="dropdown-menu glass-dropdown absolute top-full left-0 mt-1 min-w-[180px] hidden" aria-labelledby="navbarDropdown">
+              {% for x in categories %}
+              <a class="dropdown-item block no-underline" href="{{ x.get_category_url }}">{{ x.name }}</a>
+              {% endfor %}
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link block text-white hover:brightness-75 text-sm px-3 py-2 rounded-lg transition no-underline" href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link block text-white hover:brightness-75 text-sm px-3 py-2 rounded-lg transition no-underline" href="product.html">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link block text-white hover:brightness-75 text-sm px-3 py-2 rounded-lg transition no-underline" href="why.html">Why Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link block text-white hover:brightness-75 text-sm px-3 py-2 rounded-lg transition no-underline" href="testimonial.html">Testimonial</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header>
+
+{% comment %} Bootstrap dropdown toggle for mobile compatibility {% endcomment %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var dropdowns = document.querySelectorAll('.dropdown-toggle');
+  dropdowns.forEach(function (toggle) {
+    toggle.addEventListener('click', function (e) {
+      e.preventDefault();
+      var menu = this.nextElementSibling;
+      if (menu) {
+        menu.classList.toggle('hidden');
+      }
+    });
+  });
+  document.addEventListener('click', function (e) {
+    document.querySelectorAll('.dropdown-menu').forEach(function (m) {
+      if (!m.closest('.dropdown')) m.classList.add('hidden');
+    });
+  });
+});
+</script>

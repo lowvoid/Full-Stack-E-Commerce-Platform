@@ -1,0 +1,123 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="icon" href="{% static 'images/fevicon.png' %}" type="image/gif" />
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <title>{% block title %}Glass Shop{% endblock %}</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #08080e;
+      color: #fff;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse at 15% 30%, rgba(100, 60, 255, 0.10) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 20%, rgba(255, 40, 120, 0.07) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 85%, rgba(0, 180, 255, 0.06) 0%, transparent 50%);
+      background-attachment: fixed;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 100px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.18); }
+    ::selection { background: rgba(120, 80, 255, 0.3); color: #fff; }
+
+    .glass { background: rgba(255,255,255,0.04); backdrop-filter: blur(18px) saturate(1.2); -webkit-backdrop-filter: blur(18px) saturate(1.2); border: 1px solid rgba(255,255,255,0.06); border-radius: 1rem; }
+    .glass-strong { background: rgba(255,255,255,0.07); backdrop-filter: blur(32px) saturate(1.4); -webkit-backdrop-filter: blur(32px) saturate(1.4); }
+    .glass-light { background: rgba(255,255,255,0.025); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+    .glass-nav { background: rgba(255,255,255,0.04); backdrop-filter: blur(24px) saturate(1.3); -webkit-backdrop-filter: blur(24px) saturate(1.3); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .glass-card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+    .glass-card-hover:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.5); border-color: rgba(255,255,255,0.12); }
+
+    .text-gradient { background: linear-gradient(135deg, #fff 100%, #fff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+    .btn-glass {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.6rem 1.5rem; border-radius: 100px;
+      background: rgba(255,255,255,0.06); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.1); color: #fff;
+      font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 500;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.25s, border-color 0.25s, transform 0.2s;
+    }
+    .btn-glass:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); color: #fff; text-decoration: none; transform: translateY(-2px); }
+    .btn-glass-primary { background: rgba(120,80,255,0.25); border-color: rgba(120,80,255,0.3); }
+    .btn-glass-primary:hover { background: rgba(120,80,255,0.35); border-color: rgba(120,80,255,0.5); }
+
+    .carousel .glass-slide-overlay { position: absolute; inset: 0; background: rgba(8,8,14,0.3); z-index: 1; }
+    .carousel .detail-box { position: relative; z-index: 2; }
+
+    .dropdown-menu.glass-dropdown {
+      background: rgba(15,15,25,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.06); border-radius: 0.75rem; padding: 0.5rem;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    }
+    .dropdown-menu.glass-dropdown .dropdown-item {
+      color: #fff; padding: 0.45rem 1rem; border-radius: 0.5rem;
+      font-size: 0.85rem; transition: background 0.2s;
+    }
+    .dropdown-menu.glass-dropdown .dropdown-item:hover {
+      background: rgba(255,255,255,0.08); color: #fff;
+    }
+
+    .pagination-glass a {
+      display: inline-flex; align-items: center; padding: 0.4rem 1rem;
+      background: rgba(255,255,255,0.04); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.06); border-radius: 100px;
+      color: #fff; font-size: 0.8rem; text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .pagination-glass a:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.12); }
+    .pagination-glass span { color: #fff; font-size: 0.8rem; padding: 0 0.5rem; }
+
+    footer { border-top: 1px solid rgba(255,255,255,0.04); }
+    footer a { color: #fff; text-decoration: none; font-size: 0.8rem; transition: opacity 0.2s; }
+    footer a:hover { opacity: 0.7; }
+
+    @media (max-width: 768px) {
+      .navbar-collapse.glass-mobile {
+        background: rgba(8,8,14,0.96); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255,255,255,0.06); border-radius: 1rem; margin-top: 0.75rem; padding: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body class="antialiased">
+  {% include "includes/navbar.html" %}
+  {% include "includes/alerts.html" %}
+
+  {% block content %}{% endblock %}
+
+  <footer class="mt-16 py-8">
+    <div class="container mx-auto px-4 text-center">
+      <div class="flex justify-center gap-6 flex-wrap mb-4">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Shipping</a>
+        <a href="#">Returns</a>
+        <a href="#">Support</a>
+      </div>
+      <p class="text-white text-xs">&copy; {% now "Y" %} Glass Shop. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'js/custom.js' %}"></script>
+</body>
+</html>

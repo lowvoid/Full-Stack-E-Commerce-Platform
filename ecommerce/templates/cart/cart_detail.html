@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Shopping Cart" %} — Glass Shop{% endblock %}
+
+{% block content %}
+<section class="py-12 md:py-16">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-10">
+      <h2 class="text-2xl md:text-3xl font-bold text-white">{% trans "Shopping Cart" %}</h2>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-8">
+      <div class="lg:w-2/3">
+        <div class="glass overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-[rgba(255,255,255,0.06)]">
+                  <th class="text-left text-white font-semibold px-5 py-4">{% trans "Product" %}</th>
+                  <th class="text-left text-white font-semibold px-5 py-4">{% trans "Price" %}</th>
+                  <th class="text-left text-white font-semibold px-5 py-4">{% trans "Quantity" %}</th>
+                  <th class="text-left text-white font-semibold px-5 py-4">{% trans "Total" %}</th>
+                  <th class="text-left text-white font-semibold px-5 py-4">{% trans "Remove" %}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in cart %}
+                {% with product=item.product %}
+                <tr class="border-b border-[rgba(255,255,255,0.04)] hover:bg-[rgba(255,255,255,0.02)] transition">
+                  <td class="px-5 py-4">
+                    <div class="flex items-center gap-3">
+                      <div class="w-12 h-12 rounded-lg bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.04)] flex-shrink-0 overflow-hidden flex items-center justify-center">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover">
+                        {% else %}
+                        <i class="fa fa-cube text-white"></i>
+                        {% endif %}
+                      </div>
+                      <span class="text-white text-sm">{{ product.name }}</span>
+                    </div>
+                  </td>
+                  <td class="px-5 py-4 text-white">${{ item.price }}</td>
+                  <td class="px-5 py-4">
+                    <form action="{% url 'cart:cart_add' product.id %}" method="POST" class="flex items-center gap-2">
+                      {% csrf_token %}
+                      <div class="flex items-center gap-1">
+                        {{ item.update_quantity_form.quantity }}
+                        {{ item.update_quantity_form.override }}
+                      </div>
+                      <button type="submit" class="btn-glass text-xs px-3 py-1.5">
+                        <i class="fa fa-refresh"></i>
+                      </button>
+                    </form>
+                  </td>
+                  <td class="px-5 py-4 text-white">${{ item.total_price }}</td>
+                  <td class="px-5 py-4">
+                    <form action="{% url 'cart:cart_remove' product.id %}" method="POST">
+                      {% csrf_token %}
+                      <button type="submit" class="btn-glass text-xs px-3 py-1.5" style="background:rgba(255,40,80,0.2);border-color:rgba(255,40,80,0.2);">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+                {% endwith %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:w-1/3">
+        <div class="glass p-6">
+          <h4 class="text-white font-bold text-base mb-4">{% trans "Cart Summary" %}</h4>
+
+          <div class="space-y-2 mb-4">
+            <div class="flex justify-between text-white text-sm">
+              <span>{% trans "Subtotal" %}</span>
+              <span>${{ cart.get_total_price|floatformat:1 }}</span>
+            </div>
+            <div class="flex justify-between text-white text-sm">
+              <span>{% trans "Tax" %}</span>
+              <span>${{ cart.get_tax|floatformat:2 }}</span>
+            </div>
+          </div>
+
+          {% if cart.coupon %}
+          <div class="space-y-2 mb-4 p-4 rounded-xl glass">
+            <div class="flex justify-between text-white text-sm">
+              <span>{% trans "Coupon" %}</span>
+              <span class="text-white">"{{ cart.coupon.code }}"</span>
+            </div>
+            <div class="flex justify-between text-white text-sm">
+              <span>{% trans "Discount" %}</span>
+              <span class="text-white">{{ cart.coupon.discount }}%</span>
+            </div>
+            <div class="flex justify-between text-white text-sm">
+              <span>{% trans "Discount Amount" %}</span>
+              <span class="text-white">-${{ cart.get_discount|floatformat:1 }}</span>
+            </div>
+            <div class="flex justify-between text-white text-sm font-semibold border-t border-[rgba(255,255,255,0.06)] pt-2 mt-2">
+              <span>{% trans "Total After Discount" %}</span>
+              <span>${{ cart.get_total_price_after_discount|floatformat:1 }}</span>
+            </div>
+          </div>
+          {% endif %}
+
+          <div class="flex justify-between text-white font-bold text-base mb-6 pt-2 border-t border-[rgba(255,255,255,0.06)]">
+            <span>{% trans "Total" %}</span>
+            <span>${{ cart.get_total_price|floatformat:1 }}</span>
+          </div>
+
+          <div class="text-white text-xs space-y-1 mb-6">
+            <div class="flex justify-between">
+              <span>{% trans "Final Total" %}</span>
+              <span>${{ cart.get_final_price|floatformat:2 }}</span>
+            </div>
+          </div>
+
+          <form action="{% url 'coupons:coupon_apply' %}" method="POST" class="space-y-3">
+            {% csrf_token %}
+            <div>
+              <label class="block text-white text-xs font-medium mb-1.5">{% trans "Coupon Code" %}</label>
+              {{ coupon_apply_form }}
+            </div>
+            <button type="submit" class="btn-glass btn-glass-primary w-full justify-center text-sm">
+              <i class="fa fa-tag"></i> {% trans "Apply Coupon" %}
+            </button>
+          </form>
+
+          {% if cart|length > 0 %}
+          <div class="mt-6 pt-6 border-t border-[rgba(255,255,255,0.06)]">
+            <a href="{% url 'orders:order_create' %}" class="btn-glass btn-glass-accent w-full justify-center py-3 text-sm font-semibold no-underline">
+              <i class="fa fa-credit-card"></i> {% trans "Proceed to Checkout" %}
+            </a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
