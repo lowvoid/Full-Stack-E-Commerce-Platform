@@ -1,6 +1,6 @@
 # Full-Stack E-Commerce Platform
 
-A production-ready full-stack e-commerce platform built with **Django**, **PostgreSQL**, **Redis**, **Celery**, **Tailwind CSS**, and **JavaScript**. It includes secure authentication, shopping cart, coupon system, payment workflow, multilingual support, and background task processing.
+A full-stack e-commerce platform built with **Django**, **PostgreSQL**, **Redis**, **Celery**, **Tailwind CSS**, and **JavaScript**. It includes secure authentication, shopping cart, coupon system, payment workflow, multilingual support, and background task processing.
 
 ## Features
 
